@@ -1955,6 +1955,7 @@ neverallow {
   -gsid
   -init
   -recovery
+  -update_engine
   -ueventd
   -uncrypt
   -tee
