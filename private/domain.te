@@ -699,7 +699,7 @@ neverallow * *:{ blk_file chr_file } rename;
 neverallow domain device:chr_file { open read write };
 
 # Files from cache should never be executed
-neverallow domain { cache_file cache_backup_file cache_private_backup_file cache_recovery_file }:file execute;
+neverallow { domain -recovery } { cache_file cache_backup_file cache_private_backup_file cache_recovery_file }:file execute;
 
 # The test files and executables MUST not be accessible to any domain
 neverallow { domain userdebug_or_eng(`-kernel') } nativetest_data_file:file_class_set no_w_file_perms;
@@ -1798,6 +1798,7 @@ neverallow {
     -zygote
     userdebug_or_eng(`-mediaextractor')
     userdebug_or_eng(`-mediaswcodec')
+    -recovery
 } {
     file_type
     -system_file_type
@@ -1872,6 +1873,7 @@ neverallow {
 neverallow {
   domain
   -appdomain
+  -recovery
 } {
   data_file_type
   -apex_art_data_file
