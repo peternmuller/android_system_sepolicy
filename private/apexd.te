@@ -219,7 +219,7 @@ neverallow { domain -apexd } apex_info_file:file no_w_file_perms;
 # dexopt_chroot_setup calls apexd to prepare /apex for Pre-reboot Dexopt, but it
 # needs to mount a tmpfs on /apex for apexd to work on.
 neverallow { domain -apexd -init -otapreopt_chroot } apex_mnt_dir:filesystem { mount unmount };
-neverallow { domain -apexd -dexopt_chroot_setup -init -otapreopt_chroot } apex_mnt_dir:dir mounton;
+neverallow { domain -apexd -dexopt_chroot_setup -init -otapreopt_chroot -recovery } apex_mnt_dir:dir mounton;
 
 neverallow { domain -init -apexd -system_server -update_engine } apex_service:service_manager find;
 neverallow { domain -init -apexd -system_server -servicemanager -update_engine } apexd:binder call;
