@@ -206,6 +206,9 @@ attribute appdomain;
 # All third party apps (except isolated_app and ephemeral_app)
 attribute untrusted_app_all;
 
+# All apps with UID between AID_ISOLATED_START (99000) and AID_ISOLATED_END (99999).
+attribute isolated_app_all;
+
 # All domains used for apps with network access.
 attribute netdomain;
 
@@ -370,9 +373,9 @@ hal_attribute(telephony);
 hal_attribute(tetheroffload);
 hal_attribute(thermal);
 hal_attribute(tv_cec);
-hal_attribute(tv_earc);
-hal_attribute(tv_hdmi);
 hal_attribute(tv_hdmi_cec);
+hal_attribute(tv_hdmi_connection);
+hal_attribute(tv_hdmi_earc);
 hal_attribute(tv_input);
 hal_attribute(tv_tuner);
 hal_attribute(usb);
