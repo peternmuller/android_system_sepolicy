@@ -531,5 +531,20 @@ neverallow {
 
 # Prevent calling inotify on APKs. This can be used as a side channel
 # to observer app launches, so it must be disallowed. b/231587164
-neverallow appdomain apk_data_file:dir { watch watch_reads };
-neverallow appdomain apk_data_file:file { watch watch_reads };
+# Gate by targetSdkVersion to avoid breaking existing apps.
+neverallow {
+  appdomain
+  -untrusted_app_25
+  -untrusted_app_27
+  -untrusted_app_29
+  -untrusted_app_30
+  -untrusted_app_32
+} apk_data_file:dir { watch watch_reads };
+neverallow {
+  appdomain
+  -untrusted_app_25
+  -untrusted_app_27
+  -untrusted_app_29
+  -untrusted_app_30
+  -untrusted_app_32
+} apk_data_file:file { watch watch_reads };
