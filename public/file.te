@@ -287,6 +287,8 @@ type userspace_reboot_metadata_file, file_type;
 type staged_install_file, file_type;
 # Metadata information within /metadata/watchdog
 type watchdog_metadata_file, file_type;
+# Repair mode files within /metadata/repair-mode
+type repair_mode_metadata_file, file_type;
 
 # Type for /dev/cpu_variant:.*.
 type dev_cpu_variant, file_type;
@@ -381,6 +383,8 @@ type server_configurable_flags_data_file, file_type, data_file_type, core_data_f
 type staging_data_file, file_type, data_file_type, core_data_file_type;
 # /vendor/apex
 type vendor_apex_file, vendor_file_type, file_type;
+# apex_manifest.pb in vendor apex
+type vendor_apex_metadata_file, vendor_file_type, file_type;
 # /data/system/shutdown-checkpoints
 type shutdown_checkpoints_system_data_file, file_type, data_file_type, core_data_file_type;
 

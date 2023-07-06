@@ -658,6 +658,7 @@
 /data/misc/stats-metadata(/.*)? u:object_r:stats_data_file:s0
 /data/misc/systemkeys(/.*)?     u:object_r:systemkeys_data_file:s0
 /data/misc/textclassifier(/.*)?       u:object_r:textclassifier_data_file:s0
+/data/misc/threadnetwork(/.*)?        u:object_r:threadnetwork_data_file:s0
 /data/misc/train-info(/.*)?     u:object_r:stats_data_file:s0
 /data/misc/user(/.*)?           u:object_r:misc_user_data_file:s0
 /data/misc/virtualizationservice(/.*)? u:object_r:virtualizationservice_data_file:s0
@@ -847,6 +848,7 @@
 /metadata/staged-install(/.*)?    u:object_r:staged_install_file:s0
 /metadata/userspacereboot(/.*)?    u:object_r:userspace_reboot_metadata_file:s0
 /metadata/watchdog(/.*)?    u:object_r:watchdog_metadata_file:s0
+/metadata/repair-mode(/.*)?    u:object_r:repair_mode_metadata_file:s0
 
 #############################
 # asec containers
