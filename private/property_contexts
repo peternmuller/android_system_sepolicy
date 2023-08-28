@@ -253,6 +253,7 @@ persist.device_config.attempted_boot_count          u:object_r:device_config_boo
 persist.device_config.camera_native.                u:object_r:device_config_camera_native_prop:s0
 persist.device_config.configuration.                u:object_r:device_config_configuration_prop:s0
 persist.device_config.connectivity.                 u:object_r:device_config_connectivity_prop:s0
+persist.device_config.core_experiments_team_internal.  u:object_r:device_config_core_experiments_team_internal_prop:s0
 persist.device_config.edgetpu_native.               u:object_r:device_config_edgetpu_native_prop:s0
 persist.device_config.input_native_boot.            u:object_r:device_config_input_native_boot_prop:s0
 persist.device_config.lmkd_native.                  u:object_r:device_config_lmkd_native_prop:s0
@@ -708,6 +709,7 @@ ro.config.per_app_memcg         u:object_r:lmkd_config_prop:s0 exact bool
 ro.lmk.critical                 u:object_r:lmkd_config_prop:s0 exact int
 ro.lmk.critical_upgrade         u:object_r:lmkd_config_prop:s0 exact bool
 ro.lmk.debug                    u:object_r:lmkd_config_prop:s0 exact bool
+ro.lmk.delay_monitors_until_boot u:object_r:lmkd_config_prop:s0 exact bool
 ro.lmk.downgrade_pressure       u:object_r:lmkd_config_prop:s0 exact int
 ro.lmk.filecache_min_kb         u:object_r:lmkd_config_prop:s0 exact int
 ro.lmk.kill_heaviest_task       u:object_r:lmkd_config_prop:s0 exact bool
@@ -1571,3 +1573,6 @@ persist.sysui.notification.builder_extras_override u:object_r:persist_sysui_buil
 # Properties for Quick Start setup.
 ro.quick_start.oem_id u:object_r:quick_start_prop:s0 exact string
 ro.quick_start.device_id u:object_r:quick_start_prop:s0 exact string
+
+# Properties for sensor service
+sensors.aosp_low_power_sensor_fusion.maximum_rate u:object_r:sensors_config_prop:s0 exact uint
