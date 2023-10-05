@@ -9,9 +9,11 @@
     dtbo_block_device
     ota_build_prop
     snapuserd_log_data_file
+    hal_codec2_service
     hal_threadnetwork_service
     virtual_camera_service
     ot_daemon_service
     remote_auth_service
     threadnetwork_service
+    device_config_aconfig_flags_prop
   ))
