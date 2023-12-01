@@ -14,6 +14,7 @@
     hal_codec2_service
     hal_macsec_service
     hal_threadnetwork_service
+    hidraw_device
     virtual_camera_service
     ot_daemon_service
     remote_auth_service
@@ -27,4 +28,5 @@
     binderfs_logs_stats
     drm_forcel3_prop
     proc_percpu_pagelist_high_fraction
+    vendor_microdroid_file
   ))
