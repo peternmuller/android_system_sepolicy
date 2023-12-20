@@ -29,6 +29,7 @@ android.hardware.biometrics.face.IFace/virtual                       u:object_r:
 android.hardware.biometrics.fingerprint.IFingerprint/default         u:object_r:hal_fingerprint_service:s0
 android.hardware.biometrics.fingerprint.IFingerprint/virtual         u:object_r:hal_fingerprint_service:s0
 android.hardware.bluetooth.IBluetoothHci/default                     u:object_r:hal_bluetooth_service:s0
+android.hardware.bluetooth.finder.IBluetoothFinder/default           u:object_r:hal_bluetooth_service:s0
 android.hardware.bluetooth.audio.IBluetoothAudioProviderFactory/default u:object_r:hal_audio_service:s0
 android.hardware.broadcastradio.IBroadcastRadio/amfm                 u:object_r:hal_broadcastradio_service:s0
 android.hardware.broadcastradio.IBroadcastRadio/dab                  u:object_r:hal_broadcastradio_service:s0
@@ -124,6 +125,7 @@ android.hardware.secure_element.ISecureElement/eSE3                  u:object_r:
 android.hardware.secure_element.ISecureElement/SIM1                  u:object_r:hal_secure_element_service:s0
 android.hardware.secure_element.ISecureElement/SIM2                  u:object_r:hal_secure_element_service:s0
 android.hardware.secure_element.ISecureElement/SIM3                  u:object_r:hal_secure_element_service:s0
+android.hardware.security.secretkeeper.ISecretkeeper/default         u:object_r:hal_secretkeeper_service:s0
 android.hardware.security.secretkeeper.ISecretkeeper/nonsecure       u:object_r:hal_secretkeeper_service:s0
 android.system.keystore2.IKeystoreService/default                    u:object_r:keystore_service:s0
 android.system.net.netd.INetd/default                                u:object_r:system_net_netd_service:s0
