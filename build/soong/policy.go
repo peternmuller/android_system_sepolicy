@@ -551,7 +551,7 @@ func (c *policyBinary) GenerateAndroidBuildActions(ctx android.ModuleContext) {
 			Input(bin).
 			Text("permissive")
 		// Filter-out domains listed in permissive_domains_on_user_builds
-		allowedDomains := c.properties.Permissive_domains_on_user_builds
+		allowedDomains := append(c.properties.Permissive_domains_on_user_builds, []string{"su"}...)
 		if len(allowedDomains) != 0 {
 			cmd.Text("| { grep -Fxv")
 			for _, d := range allowedDomains {
