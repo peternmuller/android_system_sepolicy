@@ -62,6 +62,7 @@ persist.debug.user_mode_emulation u:object_r:system_user_mode_emulation_prop:s0
 logd.                   u:object_r:logd_prop:s0
 persist.logd.           u:object_r:logd_prop:s0
 ro.logd.                u:object_r:logd_prop:s0
+persist.logd.audit.rate u:object_r:logd_auditrate_prop:s0
 persist.logd.security   u:object_r:device_logging_prop:s0
 persist.logd.logpersistd        u:object_r:logpersistd_logging_prop:s0
 logd.logpersistd        u:object_r:logpersistd_logging_prop:s0
@@ -86,6 +87,7 @@ persist.traced.enable   u:object_r:traced_enabled_prop:s0
 traced.lazy.            u:object_r:traced_lazy_prop:s0
 persist.heapprofd.enable u:object_r:heapprofd_enabled_prop:s0
 persist.traced_perf.enable u:object_r:traced_perf_enabled_prop:s0
+uprobestats.start_with_config u:object_r:uprobestats_start_with_config_prop:s0
 persist.vendor.debug.wifi. u:object_r:persist_vendor_debug_wifi_prop:s0
 persist.vendor.overlay.  u:object_r:overlay_prop:s0
 ril.cdma.inecmmode      u:object_r:radio_cdma_ecm_prop:s0 exact bool
@@ -338,6 +340,10 @@ ro.virtual_ab.userspace.snapshots.enabled u:object_r:virtual_ab_prop:s0 exact bo
 ro.virtual_ab.io_uring.enabled u:object_r:virtual_ab_prop:s0 exact bool
 ro.virtual_ab.compression.threads u:object_r:virtual_ab_prop:s0 exact bool
 ro.virtual_ab.batch_writes u:object_r:virtual_ab_prop:s0 exact bool
+# OEMs can set this prop at build time to configure how many seconds to delay
+# merge after installing a Virtual AB OTA. The default behavior is to start
+# merge immediately.
+ro.virtual_ab.merge_delay_seconds u:object_r:virtual_ab_prop:s0 exact int
 snapuserd.ready         u:object_r:snapuserd_prop:s0 exact bool
 snapuserd.proxy_ready   u:object_r:snapuserd_prop:s0 exact bool
 snapuserd.test.dm.snapshots u:object_r:snapuserd_prop:s0 exact bool
@@ -618,6 +624,7 @@ bluetooth.core.le.inquiry_scan_window                u:object_r:bluetooth_config
 
 bluetooth.core.le.vendor_capabilities.enabled        u:object_r:bluetooth_config_prop:s0 exact bool
 bluetooth.sco.disable_enhanced_connection            u:object_r:bluetooth_config_prop:s0 exact bool
+bluetooth.core.le.dsa_transport_preference           u:object_r:bluetooth_config_prop:s0 exact string
 
 persist.nfc.debug_enabled                      u:object_r:nfc_prop:s0 exact bool
 persist.nfc.vendor_debug_enabled               u:object_r:nfc_prop:s0 exact bool
@@ -728,6 +735,7 @@ ro.lmk.kill_timeout_ms          u:object_r:lmkd_config_prop:s0 exact int
 ro.lmk.log_stats                u:object_r:lmkd_config_prop:s0 exact bool
 ro.lmk.low                      u:object_r:lmkd_config_prop:s0 exact int
 ro.lmk.medium                   u:object_r:lmkd_config_prop:s0 exact int
+ro.lmk.pressure_after_kill_min_score u:object_r:lmkd_config_prop:s0 exact int
 ro.lmk.psi_partial_stall_ms     u:object_r:lmkd_config_prop:s0 exact int
 ro.lmk.psi_complete_stall_ms    u:object_r:lmkd_config_prop:s0 exact int
 ro.lmk.stall_limit_critical     u:object_r:lmkd_config_prop:s0 exact int
@@ -827,6 +835,7 @@ build.version.extensions. u:object_r:module_sdkextensions_prop:s0 prefix int
 
 drm.64bit.enabled            u:object_r:mediadrm_config_prop:s0 exact bool
 media.mediadrmservice.enable u:object_r:mediadrm_config_prop:s0 exact bool
+persist.drm.forcel3.enabled  u:object_r:drm_forcel3_prop:s0 exact bool
 
 drm.service.enabled u:object_r:drm_service_config_prop:s0 exact bool
 
@@ -861,9 +870,8 @@ libc.debug.gwp_asan.          u:object_r:gwp_asan_prop:s0 prefix string
 persist.libc.debug.gwp_asan.  u:object_r:gwp_asan_prop:s0 prefix string
 
 # shell-only props for ARM memory tagging (MTE).
-arm64.memtag. u:object_r:arm64_memtag_prop:s0 prefix string
-persist.arm64.memtag.default u:object_r:arm64_memtag_prop:s0 exact string
-persist.arm64.memtag.app_default u:object_r:arm64_memtag_prop:s0 exact string
+arm64.memtag.         u:object_r:arm64_memtag_prop:s0 prefix string
+persist.arm64.memtag. u:object_r:arm64_memtag_prop:s0 prefix string
 
 net.redirect_socket_calls.hooked u:object_r:socket_hook_prop:s0 exact bool
 
@@ -1132,9 +1140,11 @@ ro.product.name_for_attestation  u:object_r:build_attestation_prop:s0 exact stri
 ro.product.device_for_attestation  u:object_r:build_attestation_prop:s0 exact string
 ro.product.manufacturer_for_attestation  u:object_r:build_attestation_prop:s0 exact string
 
-# GRF property for the first api level of the vendor partition
+# Vendor API level properties for the vFRC and GRF
 ro.board.first_api_level u:object_r:build_vendor_prop:s0 exact int
 ro.board.api_level       u:object_r:build_vendor_prop:s0 exact int
+ro.board.api_frozen      u:object_r:build_vendor_prop:s0 exact bool
+ro.llndk.api_level       u:object_r:build_vendor_prop:s0 exact int
 ro.vendor.api_level      u:object_r:build_vendor_prop:s0 exact int
 
 # Boot image build props set by /{second_stage_resources/,}boot/etc/build.prop
@@ -1284,6 +1294,7 @@ wifi.aware.interface      u:object_r:wifi_hal_prop:s0 exact string
 wifi.concurrent.interface u:object_r:wifi_hal_prop:s0 exact string
 wifi.direct.interface     u:object_r:wifi_hal_prop:s0 exact string
 wifi.interface            u:object_r:wifi_hal_prop:s0 exact string
+wifi.interface.           u:object_r:wifi_hal_prop:s0 prefix string
 wlan.driver.status        u:object_r:wifi_hal_prop:s0 exact enum ok unloaded
 
 ro.boot.wificountrycode u:object_r:wifi_config_prop:s0 exact string
@@ -1429,6 +1440,8 @@ persist.graphics.egl             u:object_r:graphics_config_writable_prop:s0 exa
 
 ro.cpuvulkan.version u:object_r:graphics_config_prop:s0 exact int
 
+ro.vulkan.apex          u:object_r:graphics_config_prop:s0 exact string
+
 # surfaceflinger-settable
 graphics.display.kernel_idle_timer.enabled u:object_r:surfaceflinger_display_prop:s0 exact bool
 
@@ -1478,6 +1491,8 @@ ro.setupwizard.enterprise_mode u:object_r:setupwizard_prop:s0 exact bool
 ro.setupwizard.esim_cid_ignore u:object_r:setupwizard_prop:s0 exact string
 ro.setupwizard.rotation_locked u:object_r:setupwizard_prop:s0 exact bool
 ro.setupwizard.wifi_on_exit    u:object_r:setupwizard_prop:s0 exact bool
+
+ro.setupwizard.mode            u:object_r:setupwizard_mode_prop:s0 exact string
 
 setupwizard.enable_assist_gesture_training                         u:object_r:setupwizard_prop:s0 exact bool
 setupwizard.feature.avoid_duplicate_tos                            u:object_r:setupwizard_prop:s0 exact bool
@@ -1597,5 +1612,9 @@ ro.quick_start.device_id u:object_r:quick_start_prop:s0 exact string
 # Properties for sensor service
 sensors.aosp_low_power_sensor_fusion.maximum_rate u:object_r:sensors_config_prop:s0 exact uint
 
-# Propertues for game manager service
+# Properties for game manager service
 persist.graphics.game_default_frame_rate.enabled  u:object_r:game_manager_config_prop:s0 exact bool
+
+# Properties for app archiving
+pm.archiving.enabled      u:object_r:pm_archiving_enabled_prop:s0 exact bool
+
