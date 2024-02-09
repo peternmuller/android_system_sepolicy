@@ -85,7 +85,7 @@ allow virtualizationmanager tombstoned:fd use;
 
 # Allow virtualizationmanager to read AVF debug policy
 allow virtualizationmanager sysfs_dt_avf:dir search;
-allow virtualizationmanager sysfs_dt_avf:file { open read };
+allow virtualizationmanager sysfs_dt_avf:file r_file_perms;
 
 # virtualizationmanager to be client of secretkeeper HAL. It ferries SecretManagement messages
 # from pVM to HAL.
@@ -111,3 +111,8 @@ r_dir_file(virtualizationmanager, crosvm);
 # For debug purposes we try to get the canonical path from /proc/self/fd/N. That triggers
 # a harmless denial for CompOS log files, so ignore that.
 dontaudit virtualizationmanager apex_module_data_file:dir search;
+
+is_flag_enabled(RELEASE_AVF_ENABLE_DEVICE_ASSIGNMENT, `
+    # virtualizationmanager holds references to bound devices, returned from vfio_handler
+    binder_call(virtualizationmanager, vfio_handler)
+')
