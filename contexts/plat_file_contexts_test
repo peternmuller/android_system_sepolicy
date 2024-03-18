@@ -189,6 +189,7 @@
 /dev/socket                                                       socket_device
 /dev/socket/does_not_exist                                        socket_device
 /dev/socket/adbd                                                  adbd_socket
+/dev/socket/aconfigd                                              aconfigd_socket
 /dev/socket/dnsproxyd                                             dnsproxyd_socket
 /dev/socket/dumpstate                                             dumpstate_socket
 /dev/socket/fwmarkd                                               fwmarkd_socket
@@ -432,6 +433,7 @@
 /system/bin/virtual_touchpad                                      virtual_touchpad_exec
 /system/bin/hw/android.frameworks.bufferhub@1.0-service           fwk_bufferhub_exec
 /system/bin/hw/android.system.suspend-service                     system_suspend_exec
+/system/etc/aconfig                                               system_aconfig_storage_file
 /system/etc/cgroups.json                                          cgroup_desc_file
 /system/etc/task_profiles/cgroups_0.json                          cgroup_desc_api_file
 /system/etc/task_profiles/cgroups_999.json                        cgroup_desc_api_file
@@ -462,6 +464,7 @@
 /system/usr/share/zoneinfo                                        system_zoneinfo_file
 /system/usr/share/zoneinfo/0                                      system_zoneinfo_file
 /system/bin/adbd                                                  adbd_exec
+/system/bin/aconfigd                                              aconfigd_exec
 /system/bin/vold_prepare_subdirs                                  vold_prepare_subdirs_exec
 /system/bin/stats                                                 stats_exec
 /system/bin/statsd                                                statsd_exec
@@ -495,6 +498,7 @@
 /system/vendor/bin/toolbox                                        vendor_toolbox_exec
 /vendor/etc                                                       vendor_configs_file
 /vendor/etc/does_not_exist                                        vendor_configs_file
+/vendor/etc/aconfig                                               vendor_aconfig_storage_file
 /system/vendor/etc                                                vendor_configs_file
 /system/vendor/etc/does_not_exist                                 vendor_configs_file
 /vendor/etc/cgroups.json                                          vendor_cgroup_desc_file
@@ -729,6 +733,8 @@
 /system_ext/overlay/does_not_exist                                vendor_overlay_file
 /system/system_ext/overlay                                        vendor_overlay_file
 /system/system_ext/overlay/does_not_exist                         vendor_overlay_file
+/system_ext/etc/aconfig                                           system_aconfig_storage_file
+/product/etc/aconfig                                              system_aconfig_storage_file
 
 /system_ext/etc/selinux/system_ext_file_contexts                  file_contexts_file
 /system/system_ext/etc/selinux/system_ext_file_contexts           file_contexts_file
