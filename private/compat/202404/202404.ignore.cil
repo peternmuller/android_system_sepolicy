@@ -5,5 +5,7 @@
 (typeattribute new_objects)
 (typeattributeset new_objects
   ( new_objects
-    input_device_config_prop
+    profcollectd_etr_prop
+    fs_bpf_lmkd_memevents_rb
+    fs_bpf_lmkd_memevents_prog
   ))
