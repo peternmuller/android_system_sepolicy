@@ -208,6 +208,17 @@ allow {
   -hal_omx_server
 } {shell_exec toolbox_exec}:file rx_file_perms;
 
+# Allow everyone to read from flag value boot snapshot files and general pb files
+# The boot copy of the flag value files serves flag read traffic for all processes, thus
+# needs to be readable by everybody. Also, the metadata directory will contain pb file
+# that records where flag storage files are, so also needs to be readable by everbody.
+allow domain aconfig_storage_metadata_file:file r_file_perms;
+allow domain aconfig_storage_metadata_file:dir r_dir_perms;
+
+# processes needs to access storage file stored at /metadata/aconfig/boot, require search
+# permission on /metadata dir
+allow domain metadata_file:dir search;
+
 # No domains other than a select few can access the misc_block_device. This
 # block device is reserved for OTA use.
 # Do not assert this rule on userdebug/eng builds, due to some devices using
@@ -227,6 +238,7 @@ neverallow {
   -ueventd
   -mtectrl
   -misctrl
+  -kcmdlinectrl
 } misc_block_device:blk_file { append link relabelfrom rename write open read ioctl lock };
 
 # Limit ability to ptrace or read sensitive /proc/pid files of processes
@@ -652,6 +664,7 @@ full_treble_only(`
     -vendor_task_profiles_file
     -vendor_uuid_mapping_config_file
     -vndk_sp_file
+    -vendor_aconfig_storage_file
   }:file *;
 ')
 
@@ -733,6 +746,7 @@ neverallow {
   -artd
   -dumpstate
   -installd
+  userdebug_or_eng(`-aconfigd')
   userdebug_or_eng(`-uncrypt')
   userdebug_or_eng(`-virtualizationmanager')
   userdebug_or_eng(`-virtualizationservice')
@@ -780,6 +794,7 @@ neverallow {
   -installd
   -simpleperf_app_runner
   -system_server # why?
+  userdebug_or_eng(`-aconfigd')
   userdebug_or_eng(`-uncrypt')
   userdebug_or_eng(`-virtualizationmanager')
   userdebug_or_eng(`-crosvm')
@@ -808,6 +823,12 @@ neverallow {
 get_prop(domain, vendor_medsrv_set_64b)
 
 neverallow { domain -init } mtectrl:process { dyntransition transition };
+neverallow { domain -init } kcmdlinectrl:process { dyntransition transition };
 
 # For now, don't allow processes other than gmscore to access /data/misc_ce/<userid>/checkin
 neverallow { domain -gmscore_app -init -vold_prepare_subdirs } checkin_data_file:{dir file} *;
+
+# Do not allow write access to aconfig flag value files except init and aconfigd
+neverallow { domain -init -aconfigd -system_server } aconfig_storage_metadata_file:dir no_w_dir_perms;
+neverallow { domain -init -aconfigd -system_server } aconfig_storage_metadata_file:file no_w_file_perms;
+
