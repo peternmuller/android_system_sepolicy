@@ -1,3 +1,7 @@
 # gpuservice - server for gpu stats and other gpu related services
 type gpuservice, domain;
 get_prop(gpuservice, graphics_config_prop)
+
+# system/sepolicy/public is for vendor-facing type and attribute definitions.
+# DO NOT ADD allow, neverallow, or dontaudit statements here.
+# Instead, add such policy rules to system/sepolicy/private/*.te.
