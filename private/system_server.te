@@ -518,6 +518,10 @@ allow system_server apk_data_file:{ file lnk_file } { create_file_perms link };
 allow system_server apk_tmp_file:dir create_dir_perms;
 allow system_server apk_tmp_file:file create_file_perms;
 
+# Manage /data/app-metadata
+allow system_server apk_metadata_file:dir create_dir_perms;
+allow system_server apk_metadata_file:file create_file_perms;
+
 # Access input configuration files in the /vendor directory
 r_dir_file(system_server, vendor_keylayout_file)
 r_dir_file(system_server, vendor_keychars_file)
@@ -1492,6 +1496,9 @@ allow system_server watchdog_metadata_file:file create_file_perms;
 allow system_server aconfig_storage_flags_metadata_file:dir rw_dir_perms;
 allow system_server aconfig_storage_flags_metadata_file:file create_file_perms;
 allow system_server aconfig_storage_metadata_file:dir search;
+
+allow system_server aconfigd_socket:sock_file {read write};
+allow system_server aconfigd:unix_stream_socket connectto;
 
 allow system_server aconfig_test_mission_files:dir create_dir_perms;
 allow system_server aconfig_test_mission_files:file create_file_perms;

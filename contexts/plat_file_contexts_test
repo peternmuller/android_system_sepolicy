@@ -539,6 +539,8 @@
 /vendor/priv-app/test                                             vendor_app_file
 /system/vendor/priv-app                                           vendor_app_file
 /system/vendor/priv-app/test                                      vendor_app_file
+/vendor/boot_otas/                                                vendor_boot_ota_file
+/vendor/boot_otas/test                                            vendor_boot_ota_file
 /vendor/overlay                                                   vendor_overlay_file
 /vendor/overlay/test                                              vendor_overlay_file
 /system/vendor/overlay                                            vendor_overlay_file
@@ -856,6 +858,7 @@
 /data/app/vmdltest01.tmp/test                                     apk_tmp_file
 /data/app/vmdltest02.tmp/oat                                      dalvikcache_data_file
 /data/app/vmdltest02.tmp/oat/test                                 dalvikcache_data_file
+/data/app-metadata                                                apk_metadata_file
 /data/app-private                                                 apk_private_data_file
 /data/app-private/test                                            apk_private_data_file
 /data/app-private/vmdltest.tmp                                    apk_private_tmp_file
@@ -910,6 +913,8 @@
 /data/system_de                                                   system_userdir_file
 /data/user                                                        system_userdir_file
 /data/user_de                                                     system_userdir_file
+/data/storage_area                                                system_userdir_file
+/data/misc_ce/0/storage_area_keys                                 storage_area_key_file
 
 /data/misc/adb                                                    adb_keys_file
 /data/misc/adb/test                                               adb_keys_file
