@@ -518,6 +518,10 @@ allow system_server apk_data_file:{ file lnk_file } { create_file_perms link };
 allow system_server apk_tmp_file:dir create_dir_perms;
 allow system_server apk_tmp_file:file create_file_perms;
 
+# Manage /data/app-metadata
+allow system_server apk_metadata_file:dir create_dir_perms;
+allow system_server apk_metadata_file:file create_file_perms;
+
 # Access input configuration files in the /vendor directory
 r_dir_file(system_server, vendor_keylayout_file)
 r_dir_file(system_server, vendor_keychars_file)
@@ -1220,7 +1224,9 @@ with_asan(`
 # time in state accounting
 allow system_server { fs_bpf fs_bpf_net_shared fs_bpf_netd_readonly fs_bpf_netd_shared }:dir search;
 allow system_server { fs_bpf fs_bpf_net_shared fs_bpf_netd_readonly fs_bpf_netd_shared }:file { getattr read write };
-allow system_server bpfloader:bpf { map_read map_write prog_run };
+allow system_server bpfloader:bpf prog_run;
+allow system_server self:bpf map_create;
+allow system_server { bpfloader netd network_stack system_server }:bpf { map_read map_write };
 # in order to invoke side effect of close() on such a socket calling synchronize_rcu()
 allow system_server self:key_socket create;
 # Java's Os.close() in libcore/luni/src/main/java/libcore/io/BlockGuardOs.java;l=100
@@ -1492,6 +1498,9 @@ allow system_server watchdog_metadata_file:file create_file_perms;
 allow system_server aconfig_storage_flags_metadata_file:dir rw_dir_perms;
 allow system_server aconfig_storage_flags_metadata_file:file create_file_perms;
 allow system_server aconfig_storage_metadata_file:dir search;
+
+allow system_server aconfigd_socket:sock_file {read write};
+allow system_server aconfigd:unix_stream_socket connectto;
 
 allow system_server aconfig_test_mission_files:dir create_dir_perms;
 allow system_server aconfig_test_mission_files:file create_file_perms;
