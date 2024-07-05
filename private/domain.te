@@ -505,7 +505,17 @@ get_prop(domain, binder_cache_system_server_prop)
 get_prop(domain, binder_cache_telephony_server_prop)
 
 # Binderfs logs contain sensitive information about other processes.
-neverallow { domain -dumpstate -init -vendor_init -system_server } binderfs_logs_transactions:file no_rw_file_perms;
+neverallow {
+    domain
+    -init
+    -vendor_init
+    userdebug_or_eng(`-dumpstate')
+    userdebug_or_eng(`-system_server')
+} binderfs_logs_transactions:file no_rw_file_perms;
+
+# Binderfs transaction history is less sensitive than transactions, but it
+# still contains global information about the system.
+neverallow { domain -dumpstate -init -vendor_init -system_server } binderfs_logs_transaction_history:file no_rw_file_perms;
 
 # Allow access to fsverity keyring.
 allow domain kernel:key search;
@@ -560,11 +570,11 @@ allow {
   -hal_omx_server
 } {shell_exec toolbox_exec}:file rx_file_perms;
 
-# Allow all (except vendor) to read from flag value boot snapshot files and general pb files
-# The boot copy of the flag value files serves flag read traffic for all processes, thus
-# needs to be readable by everybody. Also, the metadata directory will contain pb file
-# that records where flag storage files are, so also needs to be readable by everbody.
-r_dir_file({ coredomain appdomain }, aconfig_storage_metadata_file);
+# Allow all to read from flag value boot snapshot storage files and general pb files
+# The boot snapshot of storage files serves flag read traffic for all processes, thus
+# needs to be readable by everybody.
+r_dir_file(domain, aconfig_storage_metadata_file);
+
 r_dir_file({ coredomain appdomain }, system_aconfig_storage_file);
 r_dir_file({ coredomain appdomain }, aconfig_test_mission_files);
 
