@@ -37,3 +37,10 @@
 
 (allow vendor_init debugfs_file_type (file (create getattr open read write setattr relabelfrom unlink map)))
 (allow vendor_init debugfs_fs_type (file (open read setattr map)))
+
+(type vendor_qvr_hidraw_device)
+(typeattributeset dev_type (vendor_qvr_hidraw_device))
+
+(allow system_server vendor_qvr_hidraw_device (dir (open getattr read search ioctl lock watch watch_reads)))
+(allow system_server vendor_qvr_hidraw_device (chr_file (getattr open read ioctl lock map watch watch_reads append write)))
+
