@@ -12,4 +12,5 @@
     binderfs_logs_transactions
     binderfs_logs_transaction_history
     proc_cgroups
+    remount
   ))
