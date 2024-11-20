@@ -196,3 +196,7 @@ neverallow system_app shell_data_file:file { open read ioctl lock };
 
 # system_app should be the only domain writing the adaptive haptics prop
 neverallow { domain -init -system_app } adaptive_haptics_prop:property_service set;
+
+# allow system_app to read system_dlkm_file for /system_dlkm/etc/NOTICE.xml.gz
+allow system_app system_dlkm_file:dir search;
+allow system_app system_dlkm_file:file { getattr open read };
