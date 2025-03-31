@@ -207,8 +207,10 @@ def TestIsolatedAttributeConsistency(test_policy):
         "nnapi_ext_deny_product_prop":["file"],
         "servicemanager":["fd"],
         "toolbox_exec": ["file"],
+        "vendor_hal_dspmanager": ["binder", "fd"],
+        "vendor_dspservice":["binder", "fd"],
         # extra types being granted to isolated_compute_app
-        "isolated_compute_allowed":["service_manager", "chr_file"],
+        "isolated_compute_allowed":["service_manager", "chr_file","file","dir","lnk_file","fd","binder"],
     }
 
     def resolveHalServerSubtype(target):
@@ -226,7 +228,8 @@ def TestIsolatedAttributeConsistency(test_policy):
     def checkIsolatedComputeAllowed(tctx, tclass):
         # check if the permission is in isolated_compute_allowed
         allowedMemberTypes = test_policy.pol.QueryTypeAttribute(Type="isolated_compute_allowed_service", IsAttr=True) \
-            .union(test_policy.pol.QueryTypeAttribute(Type="isolated_compute_allowed_device", IsAttr=True))
+            .union(test_policy.pol.QueryTypeAttribute(Type="isolated_compute_allowed_device", IsAttr=True)) \
+            .union(test_policy.pol.QueryTypeAttribute(Type="isolated_compute_allowed_file_type", IsAttr=True))
         return tctx in allowedMemberTypes and tclass in permissionAllowList["isolated_compute_allowed"]
 
     def checkPermissions(permissions):

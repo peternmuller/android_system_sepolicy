@@ -23,6 +23,7 @@ allow isolated_app { ephemeral_app priv_app untrusted_app_all }:{ tcp_socket udp
 # is modified to change the secontext when accessing the lower filesystem.
 allow isolated_app { sdcard_type fuse media_rw_data_file }:file { read write append getattr lock map };
 
+allow isolated_compute_app isolated_compute_allowed_file_type:file { read };
 # For webviews, isolated_app processes can be forked from the webview_zygote
 # in addition to the zygote. Allow access to resources inherited from the
 # webview_zygote process. These rules are specialized copies of the ones in app.te.

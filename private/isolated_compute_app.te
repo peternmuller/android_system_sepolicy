@@ -32,6 +32,7 @@ allow isolated_compute_app { ephemeral_app priv_app untrusted_app_all }:{ tcp_so
 # Allow access to the toybox: b/275024392
 allow isolated_compute_app toolbox_exec:file rx_file_perms;
 
+allow isolated_compute_app isolated_compute_allowed_file_type:file { read };
 #####
 ##### Neverallow
 #####
